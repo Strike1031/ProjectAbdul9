@@ -1,0 +1,9 @@
+# unity
+Library
+Logs
+Temp
+
+# Visual Studio
+.vs
+.vscode
+obj
