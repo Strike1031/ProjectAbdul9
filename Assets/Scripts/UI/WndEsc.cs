@@ -17,7 +17,8 @@ public class WndEsc : WndBase
 
         yield return new WaitForEndOfFrame();
 
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
+         SceneManager.LoadScene(2);
     }
 
     public void OnClickMainMenu()

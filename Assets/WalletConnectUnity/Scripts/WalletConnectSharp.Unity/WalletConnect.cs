@@ -121,7 +121,9 @@ namespace WalletConnectSharp.Unity
 
             if (connectOnAwake)
             {
-                await Connect();
+                var walletConnectData = await Connect();
+                Debug.LogError("$$Wallet Accounts:"+ walletConnectData.accounts[0]);
+                Debug.LogError("$$Wallet ChainId:"+ walletConnectData.chainId);
             }
         }
         
@@ -129,7 +131,23 @@ namespace WalletConnectSharp.Unity
         {
             if (connectOnStart && !connectOnAwake)
             {
-                await Connect();
+                //mine wallet accounts, chainId
+                var walletConnectData = await Connect();
+                Debug.LogError("$$Wallet Accounts:"+ walletConnectData.accounts[0]);
+                Debug.LogError("$$Wallet ChainId:"+ walletConnectData.chainId);
+                //Now you can verfiy message to the server
+                MyGlobalClasses.accountsWalletAddress = walletConnectData.accounts[0];
+                MyGlobalClasses.chainId = walletConnectData.chainId;
+                string myVerifyRequestString = "";
+                //mine::verify request string
+                //{ "event":"verify", "address":"active_address_unity_get_from_the_wallet","signedMessage":"signed_message" }
+                myVerifyRequestString = "{ \"event\":\"verify\",  \"address\":\"";
+                myVerifyRequestString += walletConnectData.accounts[0];
+                myVerifyRequestString += "\",  \"signedMessage\":\"";
+                myVerifyRequestString += MyGlobalClasses.mySignMessage;
+                myVerifyRequestString += "\"}";
+                Debug.LogError("$$SendingVerifyMessage::"+myVerifyRequestString);
+                WebSocketUnity.WebSocketController.mInstance.Send(myVerifyRequestString);
             }
         }
 
@@ -214,6 +232,7 @@ namespace WalletConnectSharp.Unity
             
             StartCoroutine(SetupDefaultWallet());
 
+           
             #if UNITY_ANDROID || UNITY_IOS
             //Whenever we send a request to the Wallet, we want to open the Wallet app
             Session.OnSend += (sender, session) => OpenMobileWallet();
@@ -359,7 +378,9 @@ namespace WalletConnectSharp.Unity
             }
             else if (PlayerPrefs.HasKey(SessionKey) && autoSaveAndResume)
             {
-                await Connect();
+                var walletConnectData = await Connect();
+                Debug.LogError("$$Wallet Accounts:"+ walletConnectData.accounts[0]);
+                Debug.LogError("$$Wallet ChainId:"+ walletConnectData.chainId);
             }
         }
 

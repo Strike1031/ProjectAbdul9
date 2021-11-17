@@ -120,7 +120,7 @@ public class GameMgr : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
         Clear();
     }
 

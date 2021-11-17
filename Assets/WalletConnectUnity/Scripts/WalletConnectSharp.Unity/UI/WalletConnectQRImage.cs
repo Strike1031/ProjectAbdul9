@@ -33,8 +33,10 @@ public class WalletConnectQRImage : BindableMonoBehavior
     {
         var url = walletConnect.Session.URI;
         
-        Debug.Log(url);
-        
+        Debug.LogError("$$WalletSessionUrl:::"+url);
+        /*Mine*/
+        //url = "https://unity.etna.network";
+        /**/
         QRCodeGenerator qrGenerator = new QRCodeGenerator();
         QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
         UnityQRCode qrCode = new UnityQRCode(qrCodeData);
