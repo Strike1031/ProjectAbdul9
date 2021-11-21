@@ -44,9 +44,12 @@ public class WebSocketGameLobbyClient : MonoBehaviour
             MyGlobalClasses.mySignMessage = signMessage;
             break;
         case "verify":
-        case "error":
             Debug.LogError("22222222___verifyMessage");
-            SceneManager.LoadScene("main");
+            if (((bool)message["success"]) == true)
+            {
+                Debug.LogError("VerifyMessage Success with assets!!!!!!");
+               SceneManager.LoadScene("main");
+            }
             break;
         case "move":
             Debug.LogError("33333333___move");

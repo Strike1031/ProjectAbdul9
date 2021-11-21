@@ -13,7 +13,16 @@ using WalletConnectSharp.Core.Network;
 using WalletConnectSharp.Unity.Models;
 using WalletConnectSharp.Unity.Network;
 using WalletConnectSharp.Unity.Utils;
+///////////////////////////////////
+using Nethereum.RPC.Web3;
+using Nethereum.Util;
+using Nethereum.Signer;
+using Nethereum.Hex.HexConvertors.Extensions;
+using Nethereum.ABI.Encoders;
+using System.Text;  
+using Nethereum.Utils;
 
+/////////////////////////////////
 namespace WalletConnectSharp.Unity
 {
     [RequireComponent(typeof(NativeWebSocketTransport))]
@@ -133,18 +142,45 @@ namespace WalletConnectSharp.Unity
             {
                 //mine wallet accounts, chainId
                 var walletConnectData = await Connect();
-                Debug.LogError("$$Wallet Accounts:"+ walletConnectData.accounts[0]);
+                Debug.LogError("$$Wallet Account Address:"+ walletConnectData.accounts[0]);
                 Debug.LogError("$$Wallet ChainId:"+ walletConnectData.chainId);
                 //Now you can verfiy message to the server
                 MyGlobalClasses.accountsWalletAddress = walletConnectData.accounts[0];
                 MyGlobalClasses.chainId = walletConnectData.chainId;
                 string myVerifyRequestString = "";
+                //Experiment
+                var msg2 = MyGlobalClasses.mySignMessage;//example: "test"
+                Debug.LogError("RandomMessage::"+MyGlobalClasses.mySignMessage);
+               // var signer2 = new EthereumMessageSigner();
+                //var signature2 = signer2.HashAndSign(msg2, "0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7");
+               // var signature2 = signer2.HashAndSign(msg2, MyGlobalClasses.accountsWalletAddress);//public key
+               // var hasher = new Sha3Keccack();
+                //var hash = hasher.CalculateHash(msg2);
+                //byte[] bytes = Encoding.ASCII.GetBytes(msg2);  
+                //var signature2 = signer2.Sign(bytes,
+                // "0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7");
+                //"0x72be9d43ea744ca8f08cbec943f25b1cef1530f81a15201afd9fbac7ebdbe8e0"
+                //signing.................
+               // var signer3 = new MessageSigner();
+                //var signature3 = signer3.HashAndSign(msg2, MyGlobalClasses.accountsWalletAddress);//MyGlobalClasses.accountsWalletAddress
+
+
+                var signature3 = await Session.EthSign(MyGlobalClasses.accountsWalletAddress,msg2);
+                //Debug SiGNature Verified Message
+                 Debug.LogError("####SIGNATURE::"+signature3);
+                //
+
+
+               // var signature1 = signer2.EncodeUTF8AndSign(msg2, new EthECKey(MyGlobalClasses.accountsWalletAddress));//Private key Input
+               // Debug.LogError("SIGNATURE111::"+signature1);
+                //var web3 = new Web3(walletConnect.CreateProvider(new Uri("https://mainnet.infura.io/v3/<infruaId>"));
+                //
                 //mine::verify request string
                 //{ "event":"verify", "address":"active_address_unity_get_from_the_wallet","signedMessage":"signed_message" }
-                myVerifyRequestString = "{ \"event\":\"verify\",  \"address\":\"";
+                myVerifyRequestString = "{ \"event\":\"verify\",\"address\":\"";
                 myVerifyRequestString += walletConnectData.accounts[0];
-                myVerifyRequestString += "\",  \"signedMessage\":\"";
-                myVerifyRequestString += MyGlobalClasses.mySignMessage;
+                myVerifyRequestString += "\",\"signedMessage\":\"";
+                myVerifyRequestString += signature3;//MyGlobalClasses.mySignMessage
                 myVerifyRequestString += "\"}";
                 Debug.LogError("$$SendingVerifyMessage::"+myVerifyRequestString);
                 WebSocketUnity.WebSocketController.mInstance.Send(myVerifyRequestString);
@@ -184,10 +220,11 @@ namespace WalletConnectSharp.Unity
                     else if (!Session.Connected && !Session.Connecting)
                     {
                         StartCoroutine(SetupDefaultWallet());
-
-                        #if UNITY_ANDROID || UNITY_IOS
+                        //mine==may yes or not
+                        #if UNITY_ANDROID || UNITY_IOS 
+                           Session.OnSend += (sender, session) => OpenMobileWallet();
                         //Whenever we send a request to the Wallet, we want to open the Wallet app
-                        Session.OnSend += (sender, session) => OpenMobileWallet();
+                           
                         #endif
 
                         return await CompleteConnect();
@@ -232,10 +269,10 @@ namespace WalletConnectSharp.Unity
             
             StartCoroutine(SetupDefaultWallet());
 
-           
-            #if UNITY_ANDROID || UNITY_IOS
+            // mine==may yes or not
+            #if UNITY_ANDROID || UNITY_IOS 
             //Whenever we send a request to the Wallet, we want to open the Wallet app
-            Session.OnSend += (sender, session) => OpenMobileWallet();
+                Session.OnSend += (sender, session) => OpenMobileWallet();
             #endif
 
             return await CompleteConnect();
@@ -256,6 +293,7 @@ namespace WalletConnectSharp.Unity
             {
                 ConnectedEvent.Invoke();
                 ConnectedEventSession.Invoke(arg0);
+
             });
 
             var session = await Session.SourceConnectSession();
@@ -419,11 +457,13 @@ namespace WalletConnectSharp.Unity
 
         public void OpenMobileWallet()
         {
+            Debug.LogError("OpenMobileWallet");
 #if UNITY_ANDROID
             var signingURL = ConnectURL.Split('@')[0];
-
+             Debug.LogError("UNITY_ANDROID");
             Application.OpenURL(signingURL);
-#elif UNITY_IOS
+#elif UNITY_IOS 
+             Debug.LogError("UNITY_IOS");
             if (SelectedWallet == null)
             {
                 throw new NotImplementedException(
@@ -466,7 +506,7 @@ namespace WalletConnectSharp.Unity
             
 #if UNITY_ANDROID
             Application.OpenURL(ConnectURL);
-#elif UNITY_IOS
+#elif UNITY_IOS 
             if (SelectedWallet == null)
             {
                 throw new NotImplementedException(
