@@ -32,8 +32,14 @@ public class WalletConnectQRImage : BindableMonoBehavior
     private void WalletConnectOnConnectionStarted(object sender, EventArgs e)
     {
         var url = walletConnect.Session.URI;
-        
+        url = "trustwallet/"+url;//ttttttttttttt
         Debug.LogError("$$WalletSessionUrl:::"+url);
+        // #if UNITY_ANDROID
+        //     Debug.LogError("??AndroidSessionUrl:::"+url);
+        // #elif UNITY_IOS 
+        //     url = "trustwallet/"+url;
+        //     Debug.LogError("??IosSessionUrl:::"+url);
+        // #endif
         /*Mine*/
         //url = "https://unity.etna.network";
         /**/

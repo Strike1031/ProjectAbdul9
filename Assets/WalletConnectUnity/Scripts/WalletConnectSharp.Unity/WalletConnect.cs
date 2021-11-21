@@ -221,11 +221,11 @@ namespace WalletConnectSharp.Unity
                     {
                         StartCoroutine(SetupDefaultWallet());
                         //mine==may yes or not
-                        #if UNITY_ANDROID || UNITY_IOS 
+                        //#if UNITY_ANDROID || UNITY_IOS 
                            Session.OnSend += (sender, session) => OpenMobileWallet();
                         //Whenever we send a request to the Wallet, we want to open the Wallet app
                            
-                        #endif
+                       // #endif
 
                         return await CompleteConnect();
                     }
@@ -270,10 +270,10 @@ namespace WalletConnectSharp.Unity
             StartCoroutine(SetupDefaultWallet());
 
             // mine==may yes or not
-            #if UNITY_ANDROID || UNITY_IOS 
+           // #if UNITY_ANDROID || UNITY_IOS 
             //Whenever we send a request to the Wallet, we want to open the Wallet app
                 Session.OnSend += (sender, session) => OpenMobileWallet();
-            #endif
+           // #endif
 
             return await CompleteConnect();
         }
@@ -460,10 +460,9 @@ namespace WalletConnectSharp.Unity
             Debug.LogError("OpenMobileWallet");
 #if UNITY_ANDROID
             var signingURL = ConnectURL.Split('@')[0];
-             Debug.LogError("UNITY_ANDROID");
-            Application.OpenURL(signingURL);
+             Debug.LogError("*****UNITY_ANDROID:"+signingURL);
+            Application.OpenURL("Unity_Android::"+signingURL);
 #elif UNITY_IOS 
-             Debug.LogError("UNITY_IOS");
             if (SelectedWallet == null)
             {
                 throw new NotImplementedException(
@@ -485,8 +484,9 @@ namespace WalletConnectSharp.Unity
 
                 var signingUrl = url.Split('?')[0];
                 
-                Debug.Log("Opening: " + signingUrl);
-                Application.OpenURL(signingUrl);
+                Debug.LogError("*****Unity_IOS::OpeningNotSigningUrl: " + signingUrl);
+                Debug.Debug.LogError("*****Unity_IOS::OpeningUrl"+ url);
+                Application.OpenURL(url); //signingUrl
             }
 #else
             Debug.Log("Platform does not support deep linking");
