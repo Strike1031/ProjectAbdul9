@@ -131,8 +131,10 @@ namespace WalletConnectSharp.Unity
             if (connectOnAwake)
             {
                 var walletConnectData = await Connect();
+               
                 Debug.LogError("$$Wallet Accounts:"+ walletConnectData.accounts[0]);
                 Debug.LogError("$$Wallet ChainId:"+ walletConnectData.chainId);
+                Debug.LogError("$$Wallet peer Url:"+ walletConnectData.peerMeta.URL);
             }
         }
         
@@ -221,11 +223,11 @@ namespace WalletConnectSharp.Unity
                     {
                         StartCoroutine(SetupDefaultWallet());
                         //mine==may yes or not
-                        //#if UNITY_ANDROID || UNITY_IOS 
+                        #if UNITY_ANDROID || UNITY_IOS 
                            Session.OnSend += (sender, session) => OpenMobileWallet();
                         //Whenever we send a request to the Wallet, we want to open the Wallet app
                            
-                       // #endif
+                        #endif
 
                         return await CompleteConnect();
                     }
@@ -270,10 +272,10 @@ namespace WalletConnectSharp.Unity
             StartCoroutine(SetupDefaultWallet());
 
             // mine==may yes or not
-           // #if UNITY_ANDROID || UNITY_IOS 
+            #if UNITY_ANDROID || UNITY_IOS 
             //Whenever we send a request to the Wallet, we want to open the Wallet app
                 Session.OnSend += (sender, session) => OpenMobileWallet();
-           // #endif
+            #endif
 
             return await CompleteConnect();
         }
@@ -317,11 +319,15 @@ namespace WalletConnectSharp.Unity
 
             var wallet = SupportedWallets.Values.FirstOrDefault(a => a.name.ToLower() == DefaultWallet.ToString().ToLower());
 
+            Debug.LogError("SetupDefaultWallet_Progress111");
             if (wallet != null)
             {
                 yield return DownloadImagesFor(wallet.id);
+                Debug.LogError("SetupDefaultWallet_Progress222");
                 SelectedWallet = wallet;
-                Debug.Log("Setup default wallet " + wallet.name);
+                Debug.LogError("Setup default wallet " + wallet.name);
+                Debug.LogError("wallet.mobile.nativeUrl::"+wallet.mobile.native);
+                Debug.LogError("wallet.mobile.universalUrl::"+wallet.mobile.universal);
             }
         }
 
@@ -457,7 +463,8 @@ namespace WalletConnectSharp.Unity
 
         public void OpenMobileWallet()
         {
-            Debug.LogError("OpenMobileWallet");
+            Debug.LogError("~~~~~OpenMobileWallet");
+
 #if UNITY_ANDROID
             var signingURL = ConnectURL.Split('@')[0];
              Debug.LogError("*****UNITY_ANDROID:"+signingURL);
@@ -465,8 +472,16 @@ namespace WalletConnectSharp.Unity
 #elif UNITY_IOS 
             if (SelectedWallet == null)
             {
-                throw new NotImplementedException(
-                    "You must use OpenMobileWallet(AppEntry) or set SelectedWallet on iOS!");
+                /*This is base --regular*/
+                /*
+                 throw new NotImplementedException(
+                    "You must use OpenMobileWallet(AppEntry) or set SelectedWallet on iOS!"); */
+                //mine
+                 string encodedConnect = WebUtility.UrlEncode(ConnectURL);
+                 string url = "trust://"+"wc?uri=" + encodedConnect;
+                 var signingUrl = url.Split('?')[0];
+                 Debug.LogError("*****Unity_IOS::OpeningUrl"+ url);
+                 Application.OpenURL(url); //signingUrl
             }
             else
             {
@@ -489,13 +504,14 @@ namespace WalletConnectSharp.Unity
                 Application.OpenURL(url); //signingUrl
             }
 #else
-            Debug.Log("Platform does not support deep linking");
+            Debug.LogError("Platform does not support deep linking");
             return;
 #endif
         }
 
         public void OpenDeepLink()
         {
+            Debug.LogError("~~~~~~OpenDeepLink");
             if (!ActiveSession.ReadyForUserPrompt)
             {
                 Debug.LogError("WalletConnectUnity.ActiveSession not ready for a user prompt" +
@@ -509,8 +525,16 @@ namespace WalletConnectSharp.Unity
 #elif UNITY_IOS 
             if (SelectedWallet == null)
             {
+                /*This is base- regular*/
+                /*
                 throw new NotImplementedException(
-                    "You must use OpenDeepLink(AppEntry) or set SelectedWallet on iOS!");
+                    "You must use OpenDeepLink(AppEntry) or set SelectedWallet on iOS!");*/
+
+                 string encodedConnect = WebUtility.UrlEncode(ConnectURL);
+                 string url = "trust://"+"wc?uri=" + encodedConnect;
+                 Debug.LogError("*****Unity_IOS::OpeningUrl"+ url);
+                 Application.OpenURL(url); //signingUrl
+
             }
             else
             {
@@ -530,7 +554,7 @@ namespace WalletConnectSharp.Unity
                 Application.OpenURL(url);
             }
 #else
-            Debug.Log("Platform does not support deep linking");
+            Debug.LogError("Platform does not support deep linking");
             return;
 #endif
         }

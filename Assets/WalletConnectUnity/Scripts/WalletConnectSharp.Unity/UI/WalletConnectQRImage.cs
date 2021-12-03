@@ -7,6 +7,7 @@ using WalletConnectSharp.Unity;
 using WalletConnectSharp.Unity.Utils;
 using QRCoder;
 using QRCoder.Unity;
+using System.Net;
 
 [RequireComponent(typeof(Image))]
 public class WalletConnectQRImage : BindableMonoBehavior
@@ -32,7 +33,10 @@ public class WalletConnectQRImage : BindableMonoBehavior
     private void WalletConnectOnConnectionStarted(object sender, EventArgs e)
     {
         var url = walletConnect.Session.URI;
-        url = "trustwallet/"+url;//ttttttttttttt
+        //string encodedConnect = WebUtility.UrlEncode(url);
+        // url = "https://link.trustwallet.com/"+"wc?uri=" + encodedConnect;
+         //url = "trust://"+"wc?uri=" + encodedConnect;
+       // url = "examplewallet://"+"wc?uri=" + url;//mine:ttttttttttttt
         Debug.LogError("$$WalletSessionUrl:::"+url);
         // #if UNITY_ANDROID
         //     Debug.LogError("??AndroidSessionUrl:::"+url);
