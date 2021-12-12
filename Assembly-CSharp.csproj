@@ -93,6 +93,7 @@
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Models\WCSessionRequestRequest.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Models\Ethereum\WalletAddEthChain.cs" />
      <Compile Include="Assets\Scripts\UI\WndSelCharacter.cs" />
+     <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp.NEthereum\obj\Debug\net5.0\WalletConnectSharp.NEthereum.AssemblyInfo.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Events\EventDelegator.cs" />
      <Compile Include="Assets\Scripts\Universal Scripts\AttackUniversal.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp.Unity\Models\NFTTokenData.cs" />
@@ -146,6 +147,7 @@
      <Compile Include="Assets\Map\Scripts\SimpleCameraController.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Events\EventHandlerMap.cs" />
      <Compile Include="Assets\Scripts\MsgParam.cs" />
+     <Compile Include="Assets\Scripts\Manager\MyGlobalClasses.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Events\Model\JsonRpcResponseEvent.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Models\Ethereum\Types\EvmTypeInfo.cs" />
      <Compile Include="Assets\WalletConnectUnity\Scripts\WalletConnectSharp\WalletConnectSharp.Core\Models\JsonRpcResponse.cs" />
@@ -164,7 +166,6 @@
      <Compile Include="Assets\Map\terrains\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
      <Compile Include="Assets\Scripts\Universal Scripts\CharacterAnimation.cs" />
      <Compile Include="Assets\WalletConnectUnity\Demo\Scripts\PlatformToggle.cs" />
-     <Compile Include="Assets\Scripts\Manager\MyGlobalClasses.cs" />
      <None Include="Assets\Map\terrains\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\VortexEffect.shader" />
      <None Include="Assets\Map\terrains\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\DLAA.shader" />
      <None Include="Assets\Map\terrains\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\EdgeDetectX.shader" />
@@ -431,6 +432,42 @@
     </Reference>
     <Reference Include="QRCoder.Unity">
         <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\Packages\QRCoder.Unity.1.0.2\lib\net35\QRCoder.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.ABI">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.ABI.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Model">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Signer">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Signer.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Util">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Unity">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Contracts">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Hex">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.Hex.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RLP">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.RLP.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.JsonRpc.Client">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.JsonRpc.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.KeyStore">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.KeyStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RPC">
+        <HintPath>D:\MyWork\Unity\ProjectAbudul\ProjectAbdul9\Assets\WalletConnectUnity\unitynet35dlls\unitynet35dlls\Nethereum.RPC.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>C:\Program Files\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
